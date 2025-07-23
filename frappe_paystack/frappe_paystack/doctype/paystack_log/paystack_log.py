@@ -49,12 +49,12 @@ class PaystackLog(Document):
 
 	def validate_currency(self):
 		# check for supported currency
-		currencies = supported_currencies = ['NGN', 'GHS', 'ZAR', 'USD']
+		currencies = supported_currencies = ['NGN', 'GHS', 'ZAR', 'USD','KES']
 		if not currencies:
 			frappe.throw("No supported currency found for the selected gateway.")
 		if not self.currency in currencies:
 			frappe.throw(f"""
-				{self.gateway} gateway only support currencies {currencies}
+				Paystack gateway only support currencies {currencies}
 			""")
 
 	def send_payment_request(self):
