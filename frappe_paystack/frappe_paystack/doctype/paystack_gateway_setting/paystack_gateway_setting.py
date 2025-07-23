@@ -9,7 +9,7 @@ from frappe.utils import call_hook_method, get_url
 from frappe.model.document import Document
 
 class PaystackGatewaySetting(Document):
-	supported_currencies = ['NGN', 'GHS', 'ZAR', 'USD']
+	supported_currencies = ['NGN', 'GHS', 'ZAR', 'USD','KES']
 	
 	def validate(self):
 		self.check_enabled()
