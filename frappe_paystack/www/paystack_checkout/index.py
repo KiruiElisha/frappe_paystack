@@ -39,7 +39,6 @@ def verify_transaction():
             'status':transaction.status,
             'reference': transaction.reference,
             'transaction': transaction.transaction,
-            
         }).insert(ignore_permissions=1)
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), 'Verify Transaction')
@@ -55,7 +54,7 @@ def paystack_webhook(**kwargs):
         data = frappe._dict(frappe.form_dict.data)
         if not (frappe.db.exists("Payment Gateway Request", {"name":data.reference})):
             secret_key = frappe.get_doc(
-                "Paystack Gateway Setting",
+                "Payment Gateway Integration Settings",
                 {'enabled':1, 'gateway':'Paystack'}
             ).get_secret_key()
             headers = {"Authorization": f"Bearer {secret_key}"}
@@ -68,7 +67,7 @@ def paystack_webhook(**kwargs):
                 data = frappe._dict(response.data)
                 metadata = frappe._dict(data.metadata)
                 frappe.get_doc({
-                    'doctype':"Paystack Log",
+                    'doctype':"Payment Gateway Log",
                     'amount':data.amount/100,
                     'currency':data.currency,
                     'message':response.message,
